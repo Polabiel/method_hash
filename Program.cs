@@ -28,7 +28,22 @@ namespace apHashAprimorado
         };
         static void Main(string[] args)
         {
-            var tabela = new BucketHash<Pessoa>();
+            IHashing<Pessoa> tabela = null;
+
+            Write("1 - Hash Simples\n" +
+                  "2 - Bucket Hash\n" +
+                  "Escolha: ");
+
+            int escolha = int.Parse(ReadLine());
+            if (escolha < 1 || escolha > 2)
+            {
+                WriteLine("Opção inválida. Encerrando.");
+                return;
+            }
+            if (escolha == 1)
+                tabela = new HashSimples<Pessoa>();
+            else
+                tabela = new BucketHash<Pessoa>();
             BackgroundColor = ConsoleColor.White;
             ForegroundColor = ConsoleColor.Black;
             Clear();
@@ -56,10 +71,10 @@ namespace apHashAprimorado
             Exibir(tabela.Conteudo());
             EsperarEnter();
         }
-        static void Exibir(List<string> lista)
+        static void Exibir(List<Pessoa> lista)
         {
-            foreach (string item in lista)
-                WriteLine(item);
+            foreach (Pessoa item in lista)
+                WriteLine(item.ToString());
         }
         static void EsperarEnter()
         {

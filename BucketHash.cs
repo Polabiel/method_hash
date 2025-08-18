@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-public class BucketHash<T> where T : IRegistro<T>, new()
+public class BucketHash<T> : IHashing<T> where T : IRegistro<T>, new()
 {
     private const int SIZE = 37; // para gerar mais colisões; o ideal é primo > 100
     ArrayList[] dados; // tabela de hash expansível
@@ -43,17 +43,12 @@ public class BucketHash<T> where T : IRegistro<T>, new()
         onde = Hash(dado.Chave);
         return dados[onde].Contains(dado);
     }
-    public List<string> Conteudo()
+    public List<T> Conteudo()
     {
-        List<string> saida = new List<string>();
+        List<T> saida = new List<T>();
         for (int i = 0; i < dados.Length; i++)
-            if (dados[i].Count > 0)
-            {
-                string linha = $"{i,5} : ";
-                foreach (T dado in dados[i])
-                    linha += " | " + dado;
-                saida.Add(linha);
-            }
+            foreach (T dado in dados[i])
+                saida.Add(dado);
         return saida;
     }
 }
